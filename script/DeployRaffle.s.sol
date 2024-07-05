@@ -11,6 +11,7 @@ pragma solidity ^0.8.18;
 contract DeployRaffle is Script {
     function run() external returns(Raffle, HelperConfig) {
         HelperConfig helperConfig = new HelperConfig();
+
         (uint256 entranceFee,
         uint256 interval,
         address vrfCoordinator,
@@ -42,5 +43,3 @@ contract DeployRaffle is Script {
         
     }
 }
-
-contract DeployNewRaffle is Script {}

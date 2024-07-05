@@ -11,7 +11,8 @@ import {DevOpsTools} from "lib/foundry-devops/src/DevOpsTools.sol";
 contract CreateSubscription is Script {
     function createSubscriptionUsingConfig() public returns(uint64){
         HelperConfig helperConfig = new HelperConfig();
-        (, , address vrfCoordinator, , , , ,uint256 deployerKey) = helperConfig.activeNetworkConfig();
+
+        (, , address vrfCoordinator, , , , ,uint256 deployerKey) = helperConfig.activeNetworkConfig(); 
         return createSubscription(vrfCoordinator, deployerKey);
     }
 
@@ -22,6 +23,7 @@ contract CreateSubscription is Script {
         vm.stopBroadcast();
         console.log("Your subId is:", subId);
         console.log("Please update your SubscriptionId n HelperConfig.s.sol");
+
         return subId;
     }
 
@@ -35,8 +37,10 @@ contract FundSubscription is Script {
 
     function fundSubscriptionUsingConfig() public {
         HelperConfig helperConfig = new HelperConfig();
+
         (, , address vrfCoordinator, , uint64 subId, , address link,uint256 deyployerKey) = helperConfig.activeNetworkConfig();
         fundSubscription(vrfCoordinator, subId, link, deyployerKey);
+
     }
 
     function fundSubscription(address vrfCoordinator, uint64 subId, address link, uint256 deployerKey) public {
@@ -52,6 +56,10 @@ contract FundSubscription is Script {
             LinkToken(link).transferAndCall(vrfCoordinator, FUND_AMOUNT, abi.encode(subId));
             vm.stopBroadcast();
         }
+    }
+
+    function run() external {
+        fundSubscriptionUsingConfig();
     }
 }
 
